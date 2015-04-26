@@ -9,6 +9,8 @@ you will find a file Final_result.txt, this has the final tidy data. You can rea
 
 result <- read.table("Final_Result.txt")
 
+You will also find the codebook describing the Final_Result.txt, we will discuss the methodology of how I arrived at this final result.
+
 ## Working assumptions
 I extracted the data files into a sub directory in the working directory called "UCI HAR Dataset". The script assumes, that you will have the same data folder in your working directory. The script "run_analysis.R" takes relative path from the working directory to "UCI HAR Dataset" as ".\UCI HAR Dataset\". By default, the unzip operation will create the required folder structure in the working directory, if you have done "extract here" in Windows.
 
