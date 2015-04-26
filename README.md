@@ -5,6 +5,8 @@ This repository has my project submission for the "Getting and Cleaning Data" co
 You will find run_analysis.R script file. This script is standalone and it has the complete implementation of the problem statement. THere are no other dependant functions are scripts.
 
 you will find a file Final_result.txt, this has the final tidy data. You can read it in R using 
+
+
 result <- read.table("Final_Result.txt")
 
 ## Working assumptions
