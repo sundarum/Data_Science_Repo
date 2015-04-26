@@ -1,0 +1,96 @@
+---
+title: "CodeBook"
+author: "Sundar"
+date: "Sunday, April 26, 2015"
+output: html_document
+---
+This is the code boox explaining the "Final_Result.txt" file, which is constructed 
+as per the instructions given in the assignment page. I will discuss in detail, 
+how this data file was constructed.
+
+You can look at the data using the following commands
+```{r}
+Result <- read.table("Final_Result.txt")
+View(Result)
+```
+The variables in the files are as follows
+```{r, echo=FALSE}
+load("test.RData")
+Column_Names
+```
+
+The above mentioned variables are taken from the "Features.txt" file from the 
+original data source.
+
+These variables were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+tBodyAcc-XYZ, 
+tGravityAcc-XYZ, 
+tBodyAccJerk-XYZ, 
+tBodyGyro-XYZ, 
+tBodyGyroJerk-XYZ,  
+tBodyAccMag, 
+tGravityAccMag, 
+tBodyAccJerkMag, 
+tBodyGyroMag, 
+tBodyGyroJerkMag, 
+fBodyAcc-XYZ, 
+fBodyAccJerk-XYZ, 
+fBodyGyro-XYZ, 
+fBodyAccMag, 
+fBodyAccJerkMag, 
+fBodyGyroMag, 
+fBodyGyroJerkMag, 
+
+The set of variables that were estimated (and of our interest) from these signals are: 
+
+mean(): Mean value
+std(): Standard deviation
+
+# Algorithm Used
+
+#### Section 1. 
+Reading the details of activity labels and feature labels  
+This is common for both test and training datasets. Above mentioned data are read
+from activity_labels.txt and features.txt files
+
+#### Section 2. 
+Extract the features corresponding to mean and standard deviation. I used
+"Grep" functionality to extract this features. 
+
+I used "mean" and "std" as tokens to extract relevant features and their index.
+Using this index at alater point I will extract only colums of interest form 
+"X_..." file.
+eg) Mean_Features <- grep("mean",as.character(Feature_Labels$V2),ignore.case = FALSE)
+
+#### Section 3. Read the Activity and the Subject data from test and train data
+I read the subject id and the activity id from the test and the training folders
+from subject_.. and y_... files respectively
+
+
+#### Section 4. Read, extract and rename relavent columns from test and training files
+Using the Column index calculated in section 2, I extract the relevant columns 
+from X_... files in test and train folder.
+Once extracting the relavent columns, I rename them using the column names calculated 
+in section 2.
+
+
+#### Section 5. Add the activity type and the subject Id columns to test and train datasets
+The subject Id and the activity Id extracted in section 3 is appended to test and
+training set appropriately. I read the training subject id and the activity from
+training folder. This gets added as a column to the training dataframe. Same approach
+is used for test dataframe.
+
+#### Section 6. Merge the Dataframes
+I rbind the test and the training data frames to form a complete dataframe
+
+#### Section 7. Change the activity column to a factor with appropriate lables
+I assigned the activity labels to the Activity_Id column, this was extracted in 
+section 1
+
+#### Section 8. Calculate means for all columns grouped by subject ID and activity ID
+Finally, I use the "group_by" operation to group the merged data bythe subject_id and 
+the activity_id. this data is then used as an input to "summarise_each" function 
+to calculate the mean of all columns but grouped by subject and activity id.
+
